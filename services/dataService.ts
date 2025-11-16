@@ -1,41 +1,39 @@
-
 import type { PhDataPoint, WeekSelection } from '../types';
 import { WeekSelection as WeekSelectionEnum } from '../types';
 
-const generateRandomPh = (): number => {
-  // Generate pH values mostly within the 5.5-9.5 range
-  // with a higher chance of being in the habitable zone (6.5-8.5)
-  const isHabitable = Math.random() > 0.3; // 70% chance to be habitable
-  if (isHabitable) {
-    return parseFloat((6.5 + Math.random() * 2).toFixed(2)); // 6.5 to 8.5
-  } else {
-    // Generate values outside the habitable range
-    return Math.random() > 0.5
-      ? parseFloat((5.5 + Math.random()).toFixed(2)) // 5.5 to 6.5
-      : parseFloat((8.5 + Math.random()).toFixed(2)); // 8.5 to 9.5
-  }
-};
+// --- Dados Manuais ---
 
-const daysOfWeek = ['Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb', 'Dom'];
+// Dados definidos manualmente para a "Semana Anterior"
+const previousWeekData: PhDataPoint[] = [
+    { day: 'Seg', ph: 17.2 },
+    { day: 'Ter', ph: 7.1 },
+    { day: 'Qua', ph: 7.3 },
+    { day: 'Qui', ph: 17.0 },
+    { day: 'Sex', ph: 6.8 },
+    { day: 'Sáb', ph: 6.9 },
+    { day: 'Dom', ph: 17.2 },
+];
 
-const generateWeekData = (): PhDataPoint[] => {
-  return daysOfWeek.map(day => ({
-    day,
-    ph: generateRandomPh(),
-  }));
-};
-
-// Store previous week data to keep it consistent
-const previousWeekData = generateWeekData();
+// Dados definidos manualmente para a "Semana Atual"
+const currentWeekData: PhDataPoint[] = [
+    { day: 'Seg', ph: 18.0 },
+    { day: 'Ter', ph: 8.2 },
+    { day: 'Qua', ph: 7.9 },
+    { day: 'Qui', ph: 18.1 },
+    { day: 'Sex', ph: 6.4 },
+    { day: 'Sáb', ph: 7.8 },
+    { day: 'Dom', ph: 17.9 },
+];
 
 export const fetchPhData = (week: WeekSelection): Promise<PhDataPoint[]> => {
-  return new Promise((resolve) => {
-    setTimeout(() => {
-      if (week === WeekSelectionEnum.Current) {
-        resolve(generateWeekData());
-      } else {
-        resolve(previousWeekData);
-      }
-    }, 500); // Simulate network delay
-  });
+    return new Promise((resolve) => {
+        // Simula o tempo de espera da rede
+        setTimeout(() => {
+            if (week === WeekSelectionEnum.Current) {
+                resolve(currentWeekData);
+            } else {
+                resolve(previousWeekData);
+            }
+        }, 500);
+    });
 };
