@@ -1,0 +1,5 @@
+{
+  "name": "Monitoramento Ambiental dos Manguezais de Igarassu",
+  "description": "Um painel de monitoramento IoT para exibir dados de pH coletados dos manguezais de Igarassu, ajudando a comunidade local e pesquisadores a acompanhar a saúde do ecossistema.",
+  "requestFramePermissions": []
+}
